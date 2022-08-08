@@ -1,25 +1,17 @@
-from hand_classV5 import Hand
 from game_classV5 import Game
-import player_classV5
 class Smart:
-    def __init__(self, p1, p2, game):
-        self.p1 = p1
-        self.p2 = p2
+    def __init__(self,  game):
         self.game = game
         self.game_info = Game.return_pos_info(self.game)
-        self.complete_array_p1 = []
-        self.complete_array_p2 = []
-
 
     def set_all_positions(self):
         from itertools import combinations_with_replacement
         k = self.game_info[0]
         l = self.game_info[1]
-        result1 = list(combinations_with_replacement(range(0, self.game_info[2]), k))
+        result1 = list(combinations_with_replacement(range(0, self.game_info[2]), k)) # needs to be able to handle more than 10 digits
         result2 = list(combinations_with_replacement(range(0, self.game_info[3]), l))
         hashes1 = []
         hashes2 = []
-        base = 10
         for i in range(len(result1)):
             hash = ''
             for j in range(len(result1[i])):
@@ -36,12 +28,15 @@ class Smart:
                 hashes.append(str(i)+str(j))
         return hashes
 
-    def match_all_positions(self, hashes): # not needed
-        big_hashes= []
-        for i in hashes:
-            for j in hashes:
-                big_hashes.append(int(str(i)+str(j)))
-        return big_hashes
+
+    def expand_hash(self, hash):
+        p1_hands = hash[0:self.game_info[0]]
+        p2_hands = hash[self.game_info[0]:]
+        pass
+# expand hash
+# find next moves
+# find best move
+
 
 
     # def expand_hash(self, hash):

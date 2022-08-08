@@ -142,7 +142,6 @@ class Game:
         result2 = list(combinations_with_replacement(range(0, self.hand_finger_info[3]), l))
         hashes1 = []
         hashes2 = []
-        base = 10
         for i in range(len(result1)):
             hash = ''
             for j in range(len(result1[i])):
@@ -159,6 +158,15 @@ class Game:
                 hashes.append(str(i)+str(j))
         print('-')
         print(hashes)
+        print('-')
+        self.expand_hash(hashes[58])
+
+    def expand_hash(self, hash):
+        print('hash: ' + str(hash))
+        p1_hands = hash[0:self.hand_finger_info[0]]
+        p2_hands = hash[self.hand_finger_info[0]:]
+        print(p1_hands)
+        print(p2_hands)
         print('-')
 
 

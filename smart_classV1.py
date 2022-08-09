@@ -1,4 +1,6 @@
 from game_classV5 import Game
+import player_classV5
+
 class Smart:
     def __init__(self,  game):
         self.game = game
@@ -8,7 +10,7 @@ class Smart:
         from itertools import combinations_with_replacement
         k = self.game_info[0]
         l = self.game_info[1]
-        result1 = list(combinations_with_replacement(range(0, self.game_info[2]), k)) # needs to be able to handle more than 10 digits
+        result1 = list(combinations_with_replacement(range(0, self.game_info[2]), k)) # needs to be able to handle more than 10 digits - cannot now
         result2 = list(combinations_with_replacement(range(0, self.game_info[3]), l))
         hashes1 = []
         hashes2 = []
@@ -30,10 +32,20 @@ class Smart:
 
 
     def expand_hash(self, hash):
+        hands = []
         p1_hands = hash[0:self.game_info[0]]
         p2_hands = hash[self.game_info[0]:]
+        hands.append(p1_hands)
+        hands.append(p2_hands)
+        return hands
+
+    def find_next_moves(self, hash):
+        hands = self.expand_hash(hash)
+        temp_1 = player_classV5.Player('temp 1', self.game_info[0], self.game_info[2], 1, hands[0])
+        temp_2 = player_classV5.Player('temp 2', self.game_info[1], self.game_info[3], 1, hands[1])
+        # need something like do_sequenced_move
         pass
-# expand hash
+
 # find next moves
 # find best move
 
@@ -51,11 +63,7 @@ class Smart:
     # turn is 1 when player 1 is doing the bopping, and 2 when player 2 is doing the bopping
     # function will return arr with the indexes (in complete_array) of all possible immediate futures
     # [[[p1 hands], [p2 hands], [p1 hand used, p2 hand used], [...]]
-    def find_next_move(self, p1_hands, p2_hands, turn):
-        if turn % 2 == 1:
-            for i in range(len(p1_hands)):
-                for i in range(len(p2_hands)):
-                    pass
+
 
     def sort_least_to_greatest(self, arr): # don't think i need this
         for i in range(len(arr)):

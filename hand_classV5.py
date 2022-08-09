@@ -19,6 +19,10 @@ class Hand:
         if self.number_of_fingers_showing == 0:
             self.hand_out = 1
 
+    def is_hand_out(self):
+        if self.hand_out == 0 and self.number_of_fingers_showing == 0:
+            self.hand_out = 1
+
     def bop_another_hand(self, other_hand):
         other_hand.add_fingers_showing(self.number_of_fingers_showing)
 

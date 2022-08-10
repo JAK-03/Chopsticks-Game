@@ -76,9 +76,12 @@ class Player:
             if self.my_hands[i].hand_out == 0:
                 hands_i_have_left.append(i)
         for i in range(other_player.num_of_hands):
+            other_player.my_hands[i].is_hand_out()
             if other_player.my_hands[i].hand_out == 0:
                 hands_they_have_left.append(i)
         # play the move
+        if len(hands_i_have_left) or len(hands_they_have_left) == 0:
+            return 0
         self.my_hand_bops_opponents_hand(self.my_hands[random.choice(hands_i_have_left)],
                 other_player.my_hands[random.choice(hands_they_have_left)])
         time.sleep(.5)
@@ -96,6 +99,11 @@ class Player:
             return
         time.sleep(.5)
         self.print_my_hand_and_my_opponents_hand(other_player)
+
+    def do_sequential_move(self, hands):
+        if self.am_i_out() == True:
+            pass
+        pass
 
     def am_i_out(self):
         out = True

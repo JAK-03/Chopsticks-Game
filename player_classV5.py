@@ -80,8 +80,6 @@ class Player:
             if other_player.my_hands[i].hand_out == 0:
                 hands_they_have_left.append(i)
         # play the move
-        if len(hands_i_have_left) or len(hands_they_have_left) == 0:
-            return 0
         self.my_hand_bops_opponents_hand(self.my_hands[random.choice(hands_i_have_left)],
                 other_player.my_hands[random.choice(hands_they_have_left)])
         time.sleep(.5)
@@ -121,8 +119,7 @@ class Player:
                 if other_player.my_hands[i].hand_out == 0:
                     hands_they_have_left.append(i)
             # play the move
-            self.my_hand_bops_opponents_hand(self.my_hands[arr[0]],
-                                             other_player.my_hands[arr[1]])
+            self.my_hand_bops_opponents_hand(self.my_hands[arr[0]], other_player.my_hands[arr[1]])
             hash = ''
             for i in self.my_hands:
                 hash += str(i)

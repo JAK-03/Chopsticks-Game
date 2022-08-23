@@ -11,11 +11,13 @@ class Hand:
         return self.name + "(" + str(self.number_of_fingers_showing) + ")"
 
     def add_fingers_showing(self, how_many_to_add):
-        self.number_of_fingers_showing = \
-            self.number_of_fingers_showing + how_many_to_add
-        if self.number_of_fingers_showing >= self.number_of_total_fingers:
-            self.number_of_fingers_showing = \
-                self.number_of_fingers_showing - self.number_of_total_fingers
+        self.number_of_fingers_showing += how_many_to_add
+        self.number_of_fingers_showing = self.number_of_fingers_showing % self.number_of_total_fingers
+        # self.number_of_fingers_showing = \
+        #     self.number_of_fingers_showing + how_many_to_add
+        # if self.number_of_fingers_showing >= self.number_of_total_fingers:
+        #     self.number_of_fingers_showing = \
+        #         self.number_of_fingers_showing - self.number_of_total_fingers
         if self.number_of_fingers_showing == 0:
             self.hand_out = 1
 

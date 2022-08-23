@@ -172,18 +172,14 @@ class Game:
         hands.append(p1_hands)
         hands.append(p2_hands)
     #     return hands
-    #
-    # def find_next_moves(self, hash):
-    #     hands = self.expand_hash(hash)
+
+        # hands = self.expand_hash(hash)
         print('-')
         print(hands)
         temp_1 = player_classV5.Player('temp 1', self.hand_finger_info[0], self.hand_finger_info[2], 1, hands[0])
         temp_2 = player_classV5.Player('temp 2', self.hand_finger_info[1], self.hand_finger_info[3], 1, hands[1])
         temp_1.print_my_hand_and_my_opponents_hand(temp_2)
-        print('before the move')
-        temp_1.do_random_move(temp_2)
-        print('after the move')
-        print('-')
+
 
 
         # from hand_classV5 import Hand # makes everything a Hand

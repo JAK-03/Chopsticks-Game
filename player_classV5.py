@@ -44,10 +44,11 @@ class Player:
             opponent.print_my_hand()
 
 
-    def my_hand_bops_opponents_hand(self, my_hand, opponents_hand):
+    def my_hand_bops_opponents_hand(self, my_hand, opponents_hand, show):
         if not my_hand.is_it_okay_to_bop(opponents_hand):
             return False
-        print(my_hand.description_string() + " bops " + opponents_hand.description_string())  # prints who played what
+        if show:
+            print(my_hand.description_string() + " bops " + opponents_hand.description_string())  # prints who played what
         my_hand.bop_another_hand(opponents_hand)  # adds the two hands together
         return True
 
@@ -60,7 +61,7 @@ class Player:
                 hand_i_use = int(move[0:where_to_split-1]) - 1
                 hand_they_use = int(move[where_to_split + 3:]) - 1
                 # print('|' + str(hand_i_use) + '| |' + str(hand_they_use) +'|')
-                success = self.my_hand_bops_opponents_hand(self.my_hands[hand_i_use], other_player.my_hands[hand_they_use])
+                success = self.my_hand_bops_opponents_hand(self.my_hands[hand_i_use], other_player.my_hands[hand_they_use], True)
             except:
                 print('', end='')
         if not success:
@@ -81,7 +82,7 @@ class Player:
                 hands_they_have_left.append(i)
         # play the move
         self.my_hand_bops_opponents_hand(self.my_hands[random.choice(hands_i_have_left)],
-                other_player.my_hands[random.choice(hands_they_have_left)])
+                other_player.my_hands[random.choice(hands_they_have_left)], True)
         time.sleep(.5)
         self.print_my_hand_and_my_opponents_hand(other_player)
 
@@ -89,54 +90,44 @@ class Player:
         success = False
         # first checks if there is a smart choice
         if smarty_move[2] % 2 == 0:
-            success = self.my_hand_bops_opponents_hand(self.my_hands[smarty_move[0]], other_player.my_hands[smarty_move[1]])
+            success = self.my_hand_bops_opponents_hand(self.my_hands[smarty_move[0]], other_player.my_hands[smarty_move[1]], True)
         if smarty_move[2] % 2 == 1:
-            success = self.my_hand_bops_opponents_hand(self.my_hands[smarty_move[1]], other_player.my_hands[smarty_move[0]])
+            success = self.my_hand_bops_opponents_hand(self.my_hands[smarty_move[1]], other_player.my_hands[smarty_move[0]], True)
         if not success:
             self.do_random_move(other_player)
             return
         time.sleep(.5)
         self.print_my_hand_and_my_opponents_hand(other_player)
 
-    def do_sequential_move(self, other_player, arr):
+    def do_sequential_move(self, other_player, other_player_copy, arr):
         # (hopefully) returns an array of hashes that the inputed hash
-        #!!!Need to reset hands to 'original' pos affter every iteration
-        #!! Need to do something about if someone has all 0s
+        #!!! hashes 1 & 2 work, number 3 & 4 add to 1 & 2
         # arr = [0, 0, hashes I lead to] --> arr[0] is which hand i use and arr[1] is hand they use
-        if self.am_i_out() == True:
-            return arr # p2 has won
-        elif other_player.am_i_out() == True:
-            return arr # p1 has won
-        else:
-            hands_i_have_left = []
-            hands_they_have_left = []
-            for i in range(self.num_of_hands):
-                self.my_hands[i].is_hand_out()
-                if self.my_hands[i].hand_out == 0:
-                    hands_i_have_left.append(i)
-            for i in range(other_player.num_of_hands):
-                other_player.my_hands[i].is_hand_out()
-                if other_player.my_hands[i].hand_out == 0:
-                    hands_they_have_left.append(i)
-            # play the move
-            self.my_hand_bops_opponents_hand(self.my_hands[arr[0]], other_player.my_hands[arr[1]])
-            hash = ''
-            for i in self.my_hands:
-                hash += str(i)
-            for i in other_player.my_hands:
-                hash += str(i)
-            arr.append(hash)
-            if arr[0] == self.my_hands[0].number_of_total_fingers:
-                if arr[1] == other_player.my_hands[0].number_of_total_fingers:
-                    return arr
-                else:
-                    arr[0] = 0
-                    arr[1] += 1
-            else:
-                arr[0] += 1
 
-            return self.do_sequential_move(other_player, arr)
-            pass
+        # play the move
+        if self.my_hands[arr[0]] != 0:
+             if other_player.my_hands[arr[1]] != 0:
+                self.my_hand_bops_opponents_hand(self.my_hands[arr[0]], other_player.my_hands[arr[1]], False)
+                hash = ''
+                for i in self.my_hands:
+                    hash += str(i)
+                for i in other_player.my_hands:
+                    hash += str(i)
+                append = True
+                for i in arr:
+                    if hash == i:
+                        append = False
+                if append:
+                    arr.append(hash)
+        if arr[0] == len(self.my_hands)-1:
+            if arr[1] == len(other_player.my_hands)-1:
+                return arr
+            else:
+                arr[0] = 0
+                arr[1] += 1
+        else:
+            arr[0] += 1
+        return self.do_sequential_move(other_player_copy, other_player_copy, arr)
 
     def am_i_out(self):
         out = True

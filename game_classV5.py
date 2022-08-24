@@ -52,6 +52,7 @@ class Game:
         turn = 0
 
         self.set_all_positions()
+        print('***************************')
         while True:
             # checks if p1 is out
             is_player1_out = self.my_players[0].am_i_out()
@@ -159,26 +160,24 @@ class Game:
         print('-')
         print(hashes)
         print('-')
-        self.expand_hash(hashes[0])
+        hash_test = 96
+        print('hash ' + str(hash_test) + ': ' + str(hashes[hash_test]))
+        self.expand_hash(hashes[hash_test])
 
     def expand_hash(self, hash):
-        print('hash: ' + str(hash))
         p1_hands = hash[0:self.hand_finger_info[0]]
         p2_hands = hash[self.hand_finger_info[0]:]
-        print(p1_hands)
-        print(p2_hands)
-        print('-')
         hands = []
         hands.append(p1_hands)
         hands.append(p2_hands)
     #     return hands
 
         # hands = self.expand_hash(hash)
-        print('-')
-        print(hands)
         temp_1 = player_classV5.Player('temp 1', self.hand_finger_info[0], self.hand_finger_info[2], 1, hands[0])
         temp_2 = player_classV5.Player('temp 2', self.hand_finger_info[1], self.hand_finger_info[3], 1, hands[1])
-        temp_1.print_my_hand_and_my_opponents_hand(temp_2)
+        temp_3 = player_classV5.Player('temp 3', self.hand_finger_info[1], self.hand_finger_info[3], 1, hands[1])
+        x = temp_1.do_sequential_move(temp_2, temp_3, [0,0])
+        print('the result is: '+ str(x))
 
 
 

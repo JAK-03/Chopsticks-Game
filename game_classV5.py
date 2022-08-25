@@ -160,7 +160,7 @@ class Game:
         print('-')
         print(hashes)
         print('-')
-        hash_test = 96
+        hash_test = int(input('please enter a hash number: '))
         print('hash ' + str(hash_test) + ': ' + str(hashes[hash_test]))
         self.expand_hash(hashes[hash_test])
 
@@ -175,8 +175,7 @@ class Game:
         # hands = self.expand_hash(hash)
         temp_1 = player_classV5.Player('temp 1', self.hand_finger_info[0], self.hand_finger_info[2], 1, hands[0])
         temp_2 = player_classV5.Player('temp 2', self.hand_finger_info[1], self.hand_finger_info[3], 1, hands[1])
-        temp_3 = player_classV5.Player('temp 3', self.hand_finger_info[1], self.hand_finger_info[3], 1, hands[1])
-        x = temp_1.do_sequential_move(temp_2, temp_3, [0,0])
+        x = temp_1.do_sequential_move(temp_2, [0,0])
         print('the result is: '+ str(x))
 
 

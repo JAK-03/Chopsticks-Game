@@ -99,12 +99,16 @@ class Player:
         time.sleep(.5)
         self.print_my_hand_and_my_opponents_hand(other_player)
 
-    def do_sequential_move(self, other_player, other_player_copy, arr):
+    def do_sequential_move(self, other_player, arr):
         # (hopefully) returns an array of hashes that the inputed hash
-        #!!! hashes 1 & 2 work, number 3 & 4 add to 1 & 2
+        # player hands should be sorted least --> greatest
         # arr = [0, 0, hashes I lead to] --> arr[0] is which hand i use and arr[1] is hand they use
 
         # play the move
+        temp_hands = []
+        for i in other_player.my_hands:
+            temp_hands.append(i.number_of_fingers_showing)
+        temp_player = Player('temp', other_player.num_of_hands, other_player.my_hands[0].number_of_total_fingers, 2, temp_hands)
         if self.my_hands[arr[0]] != 0:
              if other_player.my_hands[arr[1]] != 0:
                 self.my_hand_bops_opponents_hand(self.my_hands[arr[0]], other_player.my_hands[arr[1]], False)
@@ -127,7 +131,7 @@ class Player:
                 arr[1] += 1
         else:
             arr[0] += 1
-        return self.do_sequential_move(other_player_copy, other_player_copy, arr)
+        return self.do_sequential_move(temp_player, arr)
 
     def am_i_out(self):
         out = True

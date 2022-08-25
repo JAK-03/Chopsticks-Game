@@ -43,8 +43,8 @@ class Smart:
         hands = self.expand_hash(hash)
         temp_1 = player_classV5.Player('temp 1', self.game_info[0], self.game_info[2], 1, hands[0])
         temp_2 = player_classV5.Player('temp 2', self.game_info[1], self.game_info[3], 1, hands[1])
-        # need something like do_sequenced_move
-        pass
+        result = temp_1.do_sequential_move(temp_2, [0,0])
+        return result #???
 
 # find next moves
 # find best move

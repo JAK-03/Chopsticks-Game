@@ -101,10 +101,7 @@ class Player:
 
     def do_sequential_move(self, other_player, arr):
         # (hopefully) returns an array of hashes that the inputed hash
-        # player hands should be sorted least --> greatest
         # arr = [0, 0, hashes I lead to] --> arr[0] is which hand i use and arr[1] is hand they use
-
-        # play the move
         temp_hands = []
         for i in other_player.my_hands:
             temp_hands.append(i.number_of_fingers_showing)
@@ -113,10 +110,31 @@ class Player:
              if other_player.my_hands[arr[1]] != 0:
                 self.my_hand_bops_opponents_hand(self.my_hands[arr[0]], other_player.my_hands[arr[1]], False)
                 hash = ''
+                # sorts hands into least to greatest
+                # sorting my hands
+                temp_hash = []
                 for i in self.my_hands:
-                    hash += str(i)
+                    temp_hash.append(str(i))
+                for i in range(len(temp_hash)):
+                    for j in range(len(temp_hash)):
+                        if temp_hash[i] < temp_hash[j]:
+                            temp = temp_hash[i]
+                            temp_hash[i] = temp_hash[j]
+                            temp_hash[j] = temp
+                for i in temp_hash:
+                    hash += i
+                temp_hash = []
+                # sorting other player's hands
                 for i in other_player.my_hands:
-                    hash += str(i)
+                    temp_hash.append(str(i))
+                for i in range(len(temp_hash)):
+                    for j in range(len(temp_hash)):
+                        if temp_hash[i] < temp_hash[j]:
+                            temp = temp_hash[i]
+                            temp_hash[i] = temp_hash[j]
+                            temp_hash[j] = temp
+                for i in temp_hash:
+                    hash += i
                 append = True
                 for i in arr:
                     if hash == i:
@@ -125,6 +143,34 @@ class Player:
                     arr.append(hash)
         if arr[0] == len(self.my_hands)-1:
             if arr[1] == len(other_player.my_hands)-1:
+                # removes the counters
+                arr.pop(0)
+                arr.pop(0)
+                # sorts the original hash
+                hash = ''
+                temp_hash = []
+                for i in self.my_hands:
+                    temp_hash.append(str(i))
+                for i in range(len(temp_hash)):
+                    for j in range(len(temp_hash)):
+                        if temp_hash[i] < temp_hash[j]:
+                            temp = temp_hash[i]
+                            temp_hash[i] = temp_hash[j]
+                            temp_hash[j] = temp
+                for i in temp_hash:
+                    hash += i
+                temp_hash = []
+                for i in temp_player.my_hands:
+                    temp_hash.append(str(i))
+                for i in range(len(temp_hash)):
+                    for j in range(len(temp_hash)):
+                        if temp_hash[i] < temp_hash[j]:
+                            temp = temp_hash[i]
+                            temp_hash[i] = temp_hash[j]
+                            temp_hash[j] = temp
+                for i in temp_hash:
+                    hash += i
+                arr.insert(0, hash)
                 return arr
             else:
                 arr[0] = 0

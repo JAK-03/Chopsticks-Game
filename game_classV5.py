@@ -6,6 +6,7 @@ class Game:
         self.hand_finger_info = self.get_hands_and_fingers([])
         self.my_players = [player_classV5.Player("player 1", self.hand_finger_info[0], self.hand_finger_info[2], 1, self.hand_finger_info[4]),
                            player_classV5.Player("player 2", self.hand_finger_info[1], self.hand_finger_info[3], 2, self.hand_finger_info[5])]
+        self.hashes = [] # only needed for testing
         global is_player1_a_bot
         is_player1_a_bot = False
         global is_player2_a_bot
@@ -157,11 +158,12 @@ class Game:
         for i in hashes1:
             for j in hashes2:
                 hashes.append(str(i)+str(j))
+        self.hashes = hashes
         print('-')
         print(hashes)
+        print(len(hashes))
         print('-')
         hash_test = int(input('please enter a hash number: '))
-        print('hash ' + str(hash_test) + ': ' + str(hashes[hash_test]))
         self.expand_hash(hashes[hash_test])
 
     def expand_hash(self, hash):

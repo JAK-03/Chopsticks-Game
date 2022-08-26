@@ -4,6 +4,7 @@ import player_classV5
 class Smart:
     def __init__(self,  game):
         self.game = game
+        self.hashes = []
         self.game_info = Game.return_pos_info(self.game)
 
     def set_all_positions(self):
@@ -28,6 +29,7 @@ class Smart:
         for i in hashes1:
             for j in hashes2:
                 hashes.append(str(i)+str(j))
+        self.hashes = hashes
         return hashes
 
 
@@ -45,6 +47,9 @@ class Smart:
         temp_2 = player_classV5.Player('temp 2', self.game_info[1], self.game_info[3], 1, hands[1])
         result = temp_1.do_sequential_move(temp_2, [0,0])
         return result #???
+
+    def find_all_next_moves(self, next_move_arr):
+        pass
 
 # find next moves
 # find best move
